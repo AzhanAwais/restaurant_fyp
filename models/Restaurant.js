@@ -5,13 +5,21 @@ const restaurantSchema = mongoose.Schema({
         type: String,
         required: [true, "Name is required"],
     },
-    location: {
+    address: {
         type: String,
-        required: [true, "Location is required"],
+        required: [true, "Address is required"],
     },
-    menu_images: [
-
-    ],
+    latitude: {
+        type: String,
+        required: [true, "Latitude is required"],
+    },
+    longitude: {
+        type: String,
+        required: [true, "Longitude is required"],
+    },
+    menu_images: [{
+        type: String
+    }],
     popular_dishes: {
         type: String,
         required: false
@@ -19,7 +27,7 @@ const restaurantSchema = mongoose.Schema({
     reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref:"Restaurant"
+            ref: "Restaurant"
         }
     ]
 }, { timestamp: true })
