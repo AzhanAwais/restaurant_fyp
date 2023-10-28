@@ -3,11 +3,11 @@ const mongoose = require("mongoose")
 const restaurantSchema = mongoose.Schema({
     name: {
         type: String,
-        requried: [true, "Name is required"],
+        required: [true, "Name is required"],
     },
     location: {
         type: String,
-        requried: [true, "Location is required"],
+        required: [true, "Location is required"],
     },
     menu_images: [
 
@@ -22,8 +22,6 @@ const restaurantSchema = mongoose.Schema({
             ref:"Restaurant"
         }
     ]
-
-
 }, { timestamp: true })
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema)
