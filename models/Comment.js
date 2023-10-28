@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
 const commentSchema = mongoose.Schema({
-
     comment: {
         type: String,
         required: false,
@@ -10,7 +9,14 @@ const commentSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
-
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    blog: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blog"
+    },
 }, { timestamp: true })
 
 const Comment = mongoose.model("Comment", commentSchema)

@@ -1,7 +1,30 @@
 const mongoose = require("mongoose")
 
 const blogSchema = mongoose.Schema({
-
+    title: {
+        type: String,
+        requried: [true, "Title is required"],
+    },
+    description: {
+        type: String,
+        requried: [true, "Title is required"],
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    comments:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }],
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 }, { timestamp: true })
 
 const Blog = mongoose.model("Blog", blogSchema)

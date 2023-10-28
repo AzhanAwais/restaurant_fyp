@@ -18,18 +18,51 @@ const restaurantSchema = mongoose.Schema({
         required: [true, "Longitude is required"],
     },
     menu_images: [{
-        type: String
+        type: String,
+        required: false
     }],
     popular_dishes: {
         type: String,
         required: false
     },
-    reviews: [
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review"
+    }],
+    image: [{
+        type: String,
+        required: false
+    }],
+    opening_hours: {
+        type: Date,
+        required: false
+    },
+    cuisine_type: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Cuisine"
+    },
+    meals: [{
+        type: String,
+        enum: ['breakfast', 'lunch', 'dinner']
+    }],
+    is_verified: {
+        type: Boolean,
+        default: false
+    },
+    social_link: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Restaurant"
+            platform: {
+                type: String,
+            },
+            url: {
+                type: String,
+            }
         }
-    ]
+    ],
+    created_by:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 }, { timestamp: true })
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema)
