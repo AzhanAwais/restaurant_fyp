@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }))
 // use routes
 app.use(authRoute)
 app.use(userRoute)
-// app.use(errorMiddleware)
+app.use(errorMiddleware)
 
 app.listen(PORT, () => {
     console.log(`listen port ${PORT}`)
