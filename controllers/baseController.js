@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-exports.getAll = Model => {
+exports.getAll = (Model, PopulateFields = []) => {
     return (async (req, res, next) => {
         try {
             let data = []
@@ -11,19 +11,26 @@ exports.getAll = Model => {
             const sort = sortOrder || 1
             const sortBy = query.sortBy || "createdAt"
 
+            const queryBuilder = Model.find().sort({ [sortBy]: sort });
+
             if (query.paginate) {
                 const page = parseInt(query.page) || 1
                 const perPage = parseInt(query.perPage) || 10
                 const skip = (page - 1) * perPage
 
-                data = await Model.find().skip(skip).limit(perPage).sort({ [sortBy]: sort })
+                queryBuilder.skip(skip).limit(perPage)
+
                 const totalRecords = await Model.countDocuments()
                 const totalPages = Math.ceil(totalRecords / perPage)
                 pagination = { page, perPage, totalRecords, totalPages }
             }
-            else {
-                data = await Model.find().sort({ [sortBy]: sort })
+
+            if (PopulateFields.length > 0) {
+                queryBuilder.populate(PopulateFields)
             }
+
+            data = await queryBuilder.exec()
+
 
             res.status(200).json({
                 message: "Records fetched successfully",

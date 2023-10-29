@@ -4,6 +4,7 @@ const restaurantSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"],
+        unique: true,
     },
     address: {
         type: String,
@@ -29,7 +30,7 @@ const restaurantSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review"
     }],
-    image: [{
+    images: [{
         type: String,
         required: false
     }],
@@ -39,7 +40,7 @@ const restaurantSchema = mongoose.Schema({
     },
     cuisine_type: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Cuisine"
+        ref: "Cuisine",
     },
     meals: [{
         type: String,
@@ -49,19 +50,21 @@ const restaurantSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    social_link: [
+    social_links: [
         {
             platform: {
                 type: String,
+                lowercase: true,
             },
             url: {
                 type: String,
             }
         }
     ],
-    created_by:{
+    created_by: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     }
 }, { timestamps: true })
 
