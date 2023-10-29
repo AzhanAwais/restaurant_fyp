@@ -3,13 +3,36 @@ const AppError = require("../utils/AppError");
 exports.getAll = Model => {
     return (async (req, res, next) => {
         try {
-            const data = await Model.find()
+            let data = []
+            let pagination = null
+
+            const query = req.query
+            const sortOrder = query.sort == 'asc' ? 1 : -1
+            const sort = sortOrder || 1
+            const sortBy = query.sortBy || "createdAt"
+
+            if (query.paginate) {
+                const page = parseInt(query.page) || 1
+                const perPage = parseInt(query.perPage) || 10
+                const skip = (page - 1) * perPage
+
+                data = await Model.find().skip(skip).limit(perPage).sort({ [sortBy]: sort })
+                const totalRecords = await Model.countDocuments()
+                const totalPages = Math.ceil(totalRecords / perPage)
+                pagination = { page, perPage, totalRecords, totalPages }
+            }
+            else {
+                data = await Model.find().sort({ [sortBy]: sort })
+            }
+
             res.status(200).json({
                 message: "Records fetched successfully",
                 success: true,
-                data
+                data: data,
+                ...(pagination && { pagination })
             })
-        } catch (e) {
+        }
+        catch (e) {
             return next(new AppError(e.message, 400))
         }
     })
@@ -25,7 +48,8 @@ exports.getOne = Model => {
                 success: true,
                 data
             })
-        } catch (e) {
+        }
+        catch (e) {
             return next(new AppError(e.message, 400))
         }
     })
@@ -40,7 +64,8 @@ exports.createOne = Model => {
                 success: true,
                 data
             })
-        } catch (e) {
+        }
+        catch (e) {
             return next(new AppError(e.message, 400))
         }
     })
@@ -56,7 +81,8 @@ exports.updateOne = Model => {
                 success: true,
                 data
             })
-        } catch (e) {
+        }
+        catch (e) {
             return next(new AppError(e.message, 400))
         }
     })
@@ -72,7 +98,8 @@ exports.deleteOne = Model => {
                 success: true,
                 data
             })
-        } catch (e) {
+        }
+        catch (e) {
             return next(new AppError(e.message, 400))
         }
     })

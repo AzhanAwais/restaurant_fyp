@@ -8,9 +8,8 @@ const generateToken = async (user) => {
 }
 
 const verifyToken = async (token) => {
-    const isVerified = jwt.verify(token, JWT_SECRET_KEY)
-    console.log("is token verified", isVerified)
-    return isVerified
+    const { _id } = jwt.verify(token, JWT_SECRET_KEY)
+    return _id
 }
 
 module.exports = {
