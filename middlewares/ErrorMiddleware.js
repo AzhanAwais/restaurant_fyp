@@ -1,4 +1,4 @@
-const errorMiddleware = (err, req, res, next) => {
+const ErrorMiddleware = (err, req, res, next) => {
     res.status(err.statusCode).json({
         message: err.message,
         success: false,
@@ -6,6 +6,4 @@ const errorMiddleware = (err, req, res, next) => {
     })
 }
 
-module.exports = {
-    errorMiddleware
-}
+module.exports = ErrorMiddleware
