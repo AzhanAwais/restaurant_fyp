@@ -1,7 +1,7 @@
 const express = require("express")
-const { model } = require("mongoose")
 const router  = new express.Router()
+const authController = require('../controllers/authController');
 
-router.get("")
+router.get("/register", authController.Register)
 
 module.exports = router 
