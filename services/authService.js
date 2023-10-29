@@ -6,7 +6,6 @@ const createUser = async (user) => {
     try {
         const isUser = await User.findOne({ email })
         if (isUser) {
-            console.log("=-=-=")
             throw new Error(`User already exist with the ${email}`)
         }
         const userDoc = new User(user)
