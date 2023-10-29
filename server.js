@@ -7,6 +7,7 @@ const authRoute = require("./routes/authRoute")
 const userRoute = require("./routes/userRoute")
 const errorMiddleware = require("./middlewares/errorMiddleware")
 const restaurantRoute = require("./routes/restaurantRoute")
+const cuisineRoute = require("./routes/cuisineRoute")
 
 // use middlewares
 app.use(cors())
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(authRoute)
 app.use(userRoute)
 app.use(restaurantRoute)
+app.use(cuisineRoute)
 
 
 // error middleware (Note: Always keep it at bottom)

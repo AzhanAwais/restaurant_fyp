@@ -1,5 +1,4 @@
 const AppError = require("../utils/AppError");
-const {Model} = require("mongoose");
 
 exports.getAll = Model => {
     return (async (req, res, next) => {
@@ -19,10 +18,10 @@ exports.getAll = Model => {
 exports.getOne = Model => {
     return (async (req, res, next) => {
         try {
-            let {id} = req.params
-            let data = await Model.findById(id)
+            const { id } = req.params
+            const data = await Model.findById(id)
             res.status(200).json({
-                message: "Records fetched successfully",
+                message: "Record fetched successfully",
                 success: true,
                 data
             })
@@ -35,9 +34,9 @@ exports.getOne = Model => {
 exports.createOne = Model => {
     return (async (req, res, next) => {
         try {
-            let data = await Model.create(req.body)
+            const data = await Model.create(req.body)
             res.status(200).json({
-                message: "Records fetched successfully",
+                message: "Record added successfully",
                 success: true,
                 data
             })
@@ -50,10 +49,10 @@ exports.createOne = Model => {
 exports.updateOne = Model => {
     return (async (req, res, next) => {
         try {
-            let {id} = req.params
-            let data = await Model.findByIdAndUpdate(id, req.body)
+            const { id } = req.params
+            const data = await Model.findByIdAndUpdate(id, req.body)
             res.status(200).json({
-                message: "Records fetched successfully",
+                message: "Record updated successfully",
                 success: true,
                 data
             })
@@ -66,10 +65,10 @@ exports.updateOne = Model => {
 exports.deleteOne = Model => {
     return (async (req, res, next) => {
         try {
-            let {id} = req.params
-            let data = await Model.deleteOne({_id: id})
+            const { id } = req.params
+            const data = await Model.findOneAndDelete({ _id: id })
             res.status(200).json({
-                message: "Records fetched successfully",
+                message: "Record deleted successfully",
                 success: true,
                 data
             })

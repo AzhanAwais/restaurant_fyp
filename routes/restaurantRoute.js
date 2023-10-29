@@ -1,6 +1,5 @@
 const express = require("express")
 const router  = new express.Router()
-
 const resturantController = require("./../controllers/resturantController")
 
 router.get('/restaurant', resturantController.getAll)

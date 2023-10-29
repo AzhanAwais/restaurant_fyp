@@ -1,0 +1,11 @@
+const express = require("express")
+const router  = new express.Router()
+const cuisineController = require("../controllers/cuisineController")
+
+router.get('/cuisine', cuisineController.getAll)
+router.get('/cuisine/:id', cuisineController.getOne)
+router.post('/cuisine', cuisineController.createOne)
+router.put('/cuisine/:id', cuisineController.updateOne)
+router.delete('/cuisine/:id', cuisineController.deleteOne)
+
+module.exports = router 
