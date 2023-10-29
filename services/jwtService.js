@@ -3,8 +3,7 @@ const { JWT_SECRET_KEY } = require("../config/index")
 
 const generateToken = async (user) => {
     const { _id } = user
-    const token = jwt.sign(_id, JWT_SECRET_KEY)
-    console.log("token", token)
+    const token = jwt.sign({ _id }, JWT_SECRET_KEY)
     return token
 }
 
@@ -16,4 +15,5 @@ const verifyToken = async (token) => {
 
 module.exports = {
     generateToken,
+    verifyToken,
 }

@@ -5,7 +5,6 @@ const db = require("./db/index")
 const cors = require('cors')
 const authRoute = require("./routes/authRoute")
 const userRoute = require("./routes/userRoute")
-const authController = require("./controllers/authController")
 const errorMiddleware = require("./middlewares/errorMiddleware")
 
 
@@ -17,7 +16,11 @@ app.use(express.urlencoded({ extended: false }))
 // use routes
 app.use(authRoute)
 app.use(userRoute)
+
+
+// error middleware (Note: Always keep it at bottom)
 app.use(errorMiddleware)
+
 
 app.listen(PORT, () => {
     console.log(`listen port ${PORT}`)
