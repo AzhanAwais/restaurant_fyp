@@ -63,7 +63,7 @@ const restaurantSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }
-}, { timestamp: true })
+}, { timestamps: true })
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema)
 

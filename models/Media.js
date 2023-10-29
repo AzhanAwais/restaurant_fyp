@@ -9,7 +9,7 @@ const mediaSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }
-}, { timestamp: true })
+}, { timestamps: true })
 
 const Media = mongoose.model("Media", mediaSchema)
 

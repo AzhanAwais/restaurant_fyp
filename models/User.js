@@ -56,7 +56,7 @@ const userSchema = mongoose.Schema({
         type: Date,
         required: false,
     }
-}, { timestamp: true })
+}, { timestamps: true })
 
 const User = mongoose.model("User", userSchema)
 

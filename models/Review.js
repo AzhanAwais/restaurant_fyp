@@ -60,7 +60,7 @@ const reviewSchema = mongoose.Schema({
         ref: 'User'
     }]
 
-}, { timestamp: true })
+}, { timestamps: true })
 
 const Review = mongoose.model("Review", reviewSchema)
 

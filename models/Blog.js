@@ -25,7 +25,7 @@ const blogSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }]
-}, { timestamp: true })
+}, { timestamps: true })
 
 const Blog = mongoose.model("Blog", blogSchema)
 

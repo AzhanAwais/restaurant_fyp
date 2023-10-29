@@ -5,7 +5,7 @@ const cuisineSchema = mongoose.Schema({
         type: String,
         required: [true, "name is required"]
     }
-}, { timestamp: true })
+}, { timestamps: true })
 
 const Cuisine = mongoose.model("Cuisine", cuisineSchema)
 

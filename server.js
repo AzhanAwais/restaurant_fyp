@@ -5,9 +5,11 @@ const db = require("./db/index")
 const cors = require('cors')
 const authRoute = require("./routes/authRoute")
 const userRoute = require("./routes/userRoute")
+const authController = require("./controllers/authController")
+
 
 // use middlewares
-app.use(cors)
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 

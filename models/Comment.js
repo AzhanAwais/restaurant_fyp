@@ -17,7 +17,7 @@ const commentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Blog"
     },
-}, { timestamp: true })
+}, { timestamps: true })
 
 const Comment = mongoose.model("Comment", commentSchema)
 
