@@ -8,6 +8,8 @@ const userRoute = require("./routes/userRoute")
 const errorMiddleware = require("./middlewares/errorMiddleware")
 const restaurantRoute = require("./routes/restaurantRoute")
 const cuisineRoute = require("./routes/cuisineRoute")
+const ambienceRoute = require("./routes/ambienceRoute")
+const reviewRoute = require("./routes/reviewRoute")
 
 // use middlewares
 app.use(cors())
@@ -19,6 +21,8 @@ app.use(authRoute)
 app.use(userRoute)
 app.use(restaurantRoute)
 app.use(cuisineRoute)
+app.use(ambienceRoute)
+app.use(reviewRoute)
 
 
 // error middleware (Note: Always keep it at bottom)
