@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const { DB_URL } = require("../config/index")
+const { DB_URL , ATLAS_DB_URL} = require("../config/index")
 
-mongoose.connect(DB_URL, {
+mongoose.connect(ATLAS_DB_URL, {
     useNewUrlParser: true
 }).then(() => {
     console.log("Db connected successfully")
