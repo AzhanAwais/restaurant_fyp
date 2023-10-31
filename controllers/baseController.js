@@ -6,7 +6,6 @@ exports.getAll = (Model, PopulateFields = [],) => {
             const deleteFromQuery = ["paginate", "page", "perPage", "sort", "sortBy"]
             let data = []
             let pagination = null
-
             const query = req.query
             const findQuery = { ...req.query }
 
