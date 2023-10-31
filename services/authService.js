@@ -2,16 +2,16 @@ const User = require("../models/User")
 const bcrypt = require('bcryptjs');
 
 const createUser = async (user, is_social_login = false) => {
-    let { email, password } = user
 
     try {
-        const isUser = await User.findOne({ email })
+        const isUser = await User.findOne({ email: user.email })
         if (isUser) {
-            throw new Error(`User already exist with the email ${email}`)
+            throw new Error(`User already exist with the email ${user.email}`)
         }
 
+
         if (!is_social_login) {
-            user.password = await bcrypt.hash(password, 10)
+            user.password = await bcrypt.hash(user.password, 10)
         }
 
         const userDoc = new User(user)

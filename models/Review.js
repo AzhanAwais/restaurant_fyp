@@ -1,15 +1,17 @@
 const mongoose = require("mongoose")
 const User = require("./User");
-const { removeReviewFromRestaurant, addReviewInRestaurant } = require("../services/restaurantService");
+const { addReviewInRestaurant, removeReviewFromRestaurant } = require("../services/reviewService");
 
 const reviewSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required:[true, "User is required"]
     },
     restaurant: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Restaurant"
+        ref: "Restaurant",
+        required:[true, "Restaurant is required"]
     },
     review: {
         type: String,
@@ -50,11 +52,11 @@ const reviewSchema = mongoose.Schema({
     },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     }],
     dislikes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     }]
 
 }, { timestamps: true })

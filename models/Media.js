@@ -1,14 +1,18 @@
 const mongoose = require("mongoose")
 
 const mediaSchema = mongoose.Schema({
-    images: [{
+    media_type: {
         type: String,
-        required: [true, "media is required"]
-    }],
+        required: [true, "Media type is required"]
+    },
+    url: {
+        type: String,
+        required: [true, "Url is required"]
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: [true, "User is required"]
     }
 }, { timestamps: true })
 

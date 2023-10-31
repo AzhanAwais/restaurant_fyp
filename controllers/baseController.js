@@ -7,11 +7,19 @@ exports.getAll = (Model, PopulateFields = [],) => {
             let pagination = null
 
             const query = req.query
+            const findQuery = { ...req.query }
+
+            delete findQuery["paginate"]
+            delete findQuery["page"]
+            delete findQuery["perPage"]
+            delete findQuery["sort"]
+            delete findQuery["sortBy"]
+
             const sortOrder = query.sort == 'asc' ? 1 : -1
             const sort = sortOrder || 1
             const sortBy = query.sortBy || "createdAt"
 
-            const queryBuilder = Model.find().sort({ [sortBy]: sort });
+            const queryBuilder = Model.find(findQuery).sort({ [sortBy]: sort });
 
             if (query.paginate) {
                 const page = parseInt(query.page) || 1

@@ -1,8 +1,7 @@
-const Restaurant = require("../models/Restaurant")
 
-const findRestaurantById = async (id) => {
+const findRestaurantById = async (id, Restaurant) => {    
     try {
-        const restaurant = await Restaurant.findById({ _id: id })
+        const restaurant = await Restaurant.findById(id)
         if (!restaurant) {
             throw new Error("No restaurant found")
         }
@@ -14,37 +13,25 @@ const findRestaurantById = async (id) => {
     }
 }
 
-const addReviewInRestaurant = async (restaurant_id, review_id) => {
+const removeReviewsOfRestaurant = async (model, restaurant_id) => {
     try {
-        const restaurant = await findRestaurantById(restaurant_id)
-        restaurant.reviews.push(review_id)
-        await restaurant.save()
-    }
-    catch (e) {
-        throw new Error(e.message)
-    }
-}
-
-const removeReviewFromRestaurant = async (model, review_id) => {
-    try {
-        const review = await model.findById({ _id: review_id })
-        if (!review) {
+        const restaurant = await model.findById({ _id: restaurant_id })
+        if (!restaurant) {
             throw new Error('Review not found');
         }
-        const restaurant_id = review.restaurant
-        const restaurant = await findRestaurantById(restaurant_id)
 
-        restaurant.reviews.pull(review_id)
-        await restaurant.save()
+        await model.updateMany({ restaurant: restaurant_id }, {
+            $set: {
+                restaurant: null
+            }
+        })
     }
     catch (e) {
         throw new Error(e.message)
     }
 }
-
 
 module.exports = {
     findRestaurantById,
-    addReviewInRestaurant,
-    removeReviewFromRestaurant
+    removeReviewsOfRestaurant
 }

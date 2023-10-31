@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const { removeReviewsOfRestaurant } = require("../services/restaurantService")
 
 const restaurantSchema = mongoose.Schema({
     name: {
@@ -28,7 +29,7 @@ const restaurantSchema = mongoose.Schema({
     },
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Review"
+        ref: "Review",
     }],
     images: [{
         type: String,
@@ -41,6 +42,12 @@ const restaurantSchema = mongoose.Schema({
     cuisine_type: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Cuisine",
+        required: false
+    },
+    ambience_type: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Ambience",
+        required: false
     },
     meals: [{
         type: String,
@@ -64,9 +71,17 @@ const restaurantSchema = mongoose.Schema({
     created_by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: [true, "User is required"]
     }
 }, { timestamps: true })
+
+
+restaurantSchema.pre('findOneAndDelete', async function (next) {
+    const { _id: restaurant_id } = this.getQuery()
+
+    await removeReviewsOfRestaurant(this.model, restaurant_id)
+    next()
+})
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema)
 
