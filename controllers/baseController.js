@@ -3,17 +3,18 @@ const AppError = require("../utils/AppError");
 exports.getAll = (Model, PopulateFields = [],) => {
     return (async (req, res, next) => {
         try {
+            const deleteFromQuery = ["paginate", "page", "perPage", "sort", "sortBy"]
             let data = []
             let pagination = null
 
             const query = req.query
             const findQuery = { ...req.query }
 
-            delete findQuery["paginate"]
-            delete findQuery["page"]
-            delete findQuery["perPage"]
-            delete findQuery["sort"]
-            delete findQuery["sortBy"]
+            for (const key in findQuery) {
+                if (deleteFromQuery.includes(key)) {
+                    delete findQuery[key]
+                }
+            }
 
             const sortOrder = query.sort == 'asc' ? 1 : -1
             const sort = sortOrder || 1
