@@ -5,10 +5,6 @@ const commentSchema = mongoose.Schema({
         type: String,
         required: false,
     },
-    is_deleted: {
-        type: Boolean,
-        default: false,
-    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

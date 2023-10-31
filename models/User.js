@@ -24,6 +24,7 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, "password is required"],
+        select: false
     },
     phone: {
         type: String,
@@ -51,10 +52,6 @@ const userSchema = mongoose.Schema({
             }
         }
     ],
-    is_deleted: {
-        type: Boolean,
-        default: false,
-    },
     dob: {
         type: Date,
         required: false,

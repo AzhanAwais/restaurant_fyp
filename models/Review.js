@@ -1,13 +1,14 @@
 const mongoose = require("mongoose")
 const User = require("./User");
+const { findRestaurantById } = require("../services/restaurantService");
 
 const reviewSchema = mongoose.Schema({
     user: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
     restaurant: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Restaurant"
     },
     review: {
@@ -47,10 +48,6 @@ const reviewSchema = mongoose.Schema({
         type: String,
         required: false,
     },
-    is_deleted: {
-        type: Boolean,
-        default: false
-    },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -62,6 +59,19 @@ const reviewSchema = mongoose.Schema({
 
 }, { timestamps: true })
 
+reviewSchema.pre('save', async function (next) {
+    const restaurant_id = this.restaurant
+    const review_id = this._id
+
+    const restaurant = await findRestaurantById(restaurant_id)
+    restaurant.reviews.push(review_id)
+    await restaurant.save()
+    
+    next()
+})
+
 const Review = mongoose.model("Review", reviewSchema)
+
+
 
 module.exports = Review

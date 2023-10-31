@@ -2,9 +2,15 @@ const Restaurant = require("../models/Restaurant")
 const baseController = require("./baseController")
 
 const PopulateFields = [
-    // "reviews",
-    "cuisine_type",
-    "created_by",
+    {
+        path: "reviews"
+    },
+    {
+        path: "cuisine_type"
+    },
+    {
+        path: "created_by"
+    },
 ]
 
 exports.getAll = baseController.getAll(Restaurant, PopulateFields)

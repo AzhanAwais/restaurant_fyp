@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-exports.getAll = (Model, PopulateFields = []) => {
+exports.getAll = (Model, PopulateFields = [],) => {
     return (async (req, res, next) => {
         try {
             let data = []
@@ -25,12 +25,12 @@ exports.getAll = (Model, PopulateFields = []) => {
                 pagination = { page, perPage, totalRecords, totalPages }
             }
 
+
             if (PopulateFields.length > 0) {
                 queryBuilder.populate(PopulateFields)
             }
 
             data = await queryBuilder.exec()
-
 
             res.status(200).json({
                 message: "Records fetched successfully",
@@ -66,7 +66,7 @@ exports.createOne = Model => {
     return (async (req, res, next) => {
         try {
             const data = await Model.create(req.body)
-            res.status(200).json({
+            res.status(201).json({
                 message: "Record added successfully",
                 success: true,
                 data
