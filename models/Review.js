@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const User = require("./User");
-const { findRestaurantById } = require("../services/restaurantService");
+const { removeReviewFromRestaurant, addReviewInRestaurant } = require("../services/restaurantService");
 
 const reviewSchema = mongoose.Schema({
     user: {
@@ -63,15 +63,18 @@ reviewSchema.pre('save', async function (next) {
     const restaurant_id = this.restaurant
     const review_id = this._id
 
-    const restaurant = await findRestaurantById(restaurant_id)
-    restaurant.reviews.push(review_id)
-    await restaurant.save()
-    
+    await addReviewInRestaurant(restaurant_id, review_id)
     next()
 })
 
+reviewSchema.pre('findOneAndDelete', async function (next) {
+    const { _id: review_id } = this.getQuery()
+
+    await removeReviewFromRestaurant(this.model, review_id)
+    next()
+})
+
+
 const Review = mongoose.model("Review", reviewSchema)
-
-
 
 module.exports = Review

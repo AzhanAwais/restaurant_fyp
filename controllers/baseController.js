@@ -100,6 +100,7 @@ exports.deleteOne = Model => {
         try {
             const { id } = req.params
             const data = await Model.findOneAndDelete({ _id: id })
+
             res.status(200).json({
                 message: "Record deleted successfully",
                 success: true,

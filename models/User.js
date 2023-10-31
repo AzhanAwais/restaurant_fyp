@@ -55,7 +55,20 @@ const userSchema = mongoose.Schema({
     dob: {
         type: Date,
         required: false,
+    },
+    client_token: {
+        type: String,
+        required: false
+    },
+    is_social_login: {
+        type: Boolean,
+        default: false,
+    },
+    platform_type: {
+        type: String,
+        required: false,
     }
+
 }, { timestamps: true })
 
 const User = mongoose.model("User", userSchema)
