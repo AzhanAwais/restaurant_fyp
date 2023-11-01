@@ -1,6 +1,6 @@
 const AppError = require("../utils/AppError");
 
-exports.getAll = (Model, PopulateFields = [],) => {
+exports.getAll = (Model, PopulateFields = []) => {
     return (async (req, res, next) => {
         try {
             const deleteFromQuery = ["paginate", "page", "perPage", "sort", "sortBy"]
