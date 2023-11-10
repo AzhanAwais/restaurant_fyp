@@ -19,7 +19,7 @@ exports.deleteOne = baseController.deleteOne(Blog)
 exports.likeBlog = async (req, res, next) => {
     try {
         let {blog_id, user_id} = req.body
-        let userFind = await User.findById(user_id)
+        let userFind = await User.findById(user_id).populate(PopulateFields)
         if (!userFind) return next(new AppError("No user found", 404))
         let blog = await Blog.findById(blog_id)
         if (!blog) return next(new AppError("No blog found", 404))
@@ -42,7 +42,7 @@ exports.likeBlog = async (req, res, next) => {
 exports.dislikeBlog = async (req, res, next) => {
     try {
         let {blog_id, user_id} = req.body
-        let userFind = await User.findById(user_id)
+        let userFind = await User.findById(user_id).populate(PopulateFields)
         if (!userFind) return next(new AppError("No user found", 404))
         let blog = await Blog.findById(blog_id)
         if (!blog) return next(new AppError("No blog found", 404))
@@ -52,7 +52,7 @@ exports.dislikeBlog = async (req, res, next) => {
         blog.dislikes.push(user_id)
         await blog.save()
         res.status(200).json({
-            message: "User likes the blog",
+            message: "User dislikes this blog",
             success: true,
             data: blog
         })
