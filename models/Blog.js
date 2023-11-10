@@ -1,14 +1,14 @@
 const mongoose = require("mongoose")
 const { removeCommentsOfBlog } = require("../services/blogService")
 
-const blogSchema = mongoose.Schema({
+const blogSchema = new mongoose.Schema({
     title: {
         type: String,
-        requried: [true, "Title is required"],
+        required: [true, "Title is required"],
     },
     description: {
         type: String,
-        requried: [true, "Description is required"],
+        required: [true, "Description is required"],
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

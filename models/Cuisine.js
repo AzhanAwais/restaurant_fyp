@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const { removeCuisineFromRestaurants } = require("../services/cuisineService")
 
-const cuisineSchema = mongoose.Schema({
+const cuisineSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"],

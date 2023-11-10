@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const { removeAmbienceFromRestaurants } = require("../services/ambienceService")
 
-const ambienceSchema = mongoose.Schema({
+const ambienceSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"],
