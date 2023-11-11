@@ -5,8 +5,8 @@ const authMiddleware = require("../middlewares/authMiddleware")
 
 router.get('/ambience', ambienceController.getAll)
 router.get('/ambience/:id', ambienceController.getOne)
-router.post('/ambience', authMiddleware, ambienceController.createOne)
-router.put('/ambience/:id', authMiddleware, ambienceController.updateOne)
-router.delete('/ambience/:id', authMiddleware, ambienceController.deleteOne)
+router.post('/ambience', ambienceController.createOne)
+router.put('/ambience/:id', ambienceController.updateOne)
+router.delete('/ambience/:id', ambienceController.deleteOne)
 
 module.exports = router 

@@ -17,6 +17,10 @@ const userSchema = mongoose.Schema({
         lowercase: true,
         trim: true
     },
+    role: {
+        type: String,
+        default: "user"
+    },
     profile_image: {
         type: String,
         required: false

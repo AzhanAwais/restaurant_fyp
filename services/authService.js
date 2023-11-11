@@ -9,7 +9,6 @@ const createUser = async (user, is_social_login = false) => {
             throw new Error(`User already exist with the email ${user.email}`)
         }
 
-
         if (!is_social_login) {
             user.password = await bcrypt.hash(user.password, 10)
         }
