@@ -45,8 +45,12 @@ exports.searchRestaurants = async (req, res, next) => {
             aggregationBody.push({$match: {name: name}})
         }
 
+        if (request?.id) {
+            aggregationBody.push({$match: {_id: request?.id}})
+        }
+
         if (request?.address) {
-            let address = new RegExp(request?.address,'i')
+            let address = new RegExp(request?.address, 'i')
             aggregationBody.push({$match: {address: address}})
         }
 
@@ -62,8 +66,6 @@ exports.searchRestaurants = async (req, res, next) => {
             })
         }
 
-        // lookups
-
         aggregationBody.push({
             $lookup: {
                 from: 'Cuisine',
@@ -78,6 +80,22 @@ exports.searchRestaurants = async (req, res, next) => {
                 localField: 'cuisine_type',
                 foreignField: '_id',
                 as: 'cuisine_type'
+            },
+        })
+        aggregationBody.push({
+            $lookup: {
+                from: 'Ambience',
+                localField: 'ambience_type',
+                foreignField: '_id',
+                as: 'ambience_type'
+            },
+        })
+        aggregationBody.push({
+            $lookup: {
+                from: 'User',
+                localField: 'created_by',
+                foreignField: '_id',
+                as: 'created_by'
             },
         })
 
