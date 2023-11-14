@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const mediaSchema = mongoose.Schema({
+const mediaSchema = new mongoose.Schema({
     media_type: {
         type: String,
         required: [true, "Media type is required"]
