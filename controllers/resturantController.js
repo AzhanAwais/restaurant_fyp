@@ -28,12 +28,6 @@ exports.createRestaurantMiddleware = (req, res, next) => {
     }
 }
 
-exports.getAll = baseController.getAll(Restaurant, PopulateFields)
-exports.getOne = baseController.getOne(Restaurant)
-exports.createOne = baseController.createOne(Restaurant)
-exports.updateOne = baseController.updateOne(Restaurant)
-exports.deleteOne = baseController.deleteOne(Restaurant)
-
 exports.searchRestaurants = async (req, res, next) => {
     try {
         let aggregationBody = []
@@ -110,3 +104,9 @@ exports.searchRestaurants = async (req, res, next) => {
         return next(new AppError(e.message, 400))
     }
 }
+
+exports.getAll = baseController.getAll(Restaurant, PopulateFields)
+exports.getOne = baseController.getOne(Restaurant)
+exports.createOne = baseController.createOne(Restaurant)
+exports.updateOne = baseController.updateOne(Restaurant)
+exports.deleteOne = baseController.deleteOne(Restaurant)

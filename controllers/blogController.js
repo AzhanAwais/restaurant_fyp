@@ -9,13 +9,6 @@ const PopulateFields = [
     },
 ]
 
-
-exports.getAll = baseController.getAll(Blog, PopulateFields)
-exports.getOne = baseController.getOne(Blog, PopulateFields)
-exports.createOne = baseController.createOne(Blog)
-exports.updateOne = baseController.updateOne(Blog)
-exports.deleteOne = baseController.deleteOne(Blog)
-
 exports.likeBlog = async (req, res, next) => {
     try {
         let {blog_id, user_id} = req.body
@@ -61,3 +54,9 @@ exports.dislikeBlog = async (req, res, next) => {
         return next(new AppError(e.message, 400))
     }
 }
+
+exports.getAll = baseController.getAll(Blog, PopulateFields)
+exports.getOne = baseController.getOne(Blog, PopulateFields)
+exports.createOne = baseController.createOne(Blog)
+exports.updateOne = baseController.updateOne(Blog)
+exports.deleteOne = baseController.deleteOne(Blog)
