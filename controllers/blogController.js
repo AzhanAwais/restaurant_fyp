@@ -9,7 +9,7 @@ const PopulateFields = [
 
 
 exports.getAll = baseController.getAll(Blog, PopulateFields)
-exports.getOne = baseController.getOne(Blog)
+exports.getOne = baseController.getOne(Blog, PopulateFields)
 exports.createOne = baseController.createOne(Blog)
 exports.updateOne = baseController.updateOne(Blog)
 exports.deleteOne = baseController.deleteOne(Blog)

@@ -53,11 +53,11 @@ exports.getAll = (Model, PopulateFields = []) => {
     })
 }
 
-exports.getOne = Model => {
+exports.getOne = (Model, PopulateFields) => {
     return (async (req, res, next) => {
         try {
             const { id } = req.params
-            const data = await Model.findById(id)
+            const data = await Model.findById(id).populate(PopulateFields)
             res.status(200).json({
                 message: "Record fetched successfully",
                 success: true,
