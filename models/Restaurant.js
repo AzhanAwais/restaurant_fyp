@@ -79,7 +79,6 @@ restaurantSchema.index({location: '2dsphere'})
 
 restaurantSchema.pre('findOneAndDelete', async function (next) {
     const {_id: restaurant_id} = this.getQuery()
-
     await removeReviewsOfRestaurant(this.model, restaurant_id)
     next()
 })
