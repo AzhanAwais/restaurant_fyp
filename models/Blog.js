@@ -10,6 +10,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [true, "Description is required"],
     },
+    images: [{
+        type: String,
+        required: false
+    }],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

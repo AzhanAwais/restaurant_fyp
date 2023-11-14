@@ -5,8 +5,8 @@ const authMiddleware = require("../middlewares/authMiddleware")
 
 router.get('/cuisine', cuisineController.getAll)
 router.get('/cuisine/:id', cuisineController.getOne)
-router.post('/cuisine', authMiddleware, cuisineController.createOne)
-router.put('/cuisine/:id', authMiddleware, cuisineController.updateOne)
-router.delete('/cuisine/:id', authMiddleware, cuisineController.deleteOne)
+router.post('/cuisine', cuisineController.createOne)
+router.put('/cuisine/:id', cuisineController.updateOne)
+router.delete('/cuisine/:id', cuisineController.deleteOne)
 
 module.exports = router 
