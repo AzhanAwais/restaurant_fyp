@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const {removeReviewsOfRestaurant} = require("../services/restaurantService")
+const { removeReviewsOfRestaurant } = require("../services/restaurantService")
 
 const restaurantSchema = new mongoose.Schema({
     name: {
@@ -57,6 +57,11 @@ const restaurantSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    manage_access: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: false
+    },
     social_links: [
         {
             platform: {
@@ -73,12 +78,12 @@ const restaurantSchema = new mongoose.Schema({
         ref: "User",
         required: [true, "User is required"]
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
-restaurantSchema.index({location: '2dsphere'})
+restaurantSchema.index({ location: '2dsphere' })
 
 restaurantSchema.pre('findOneAndDelete', async function (next) {
-    const {_id: restaurant_id} = this.getQuery()
+    const { _id: restaurant_id } = this.getQuery()
     await removeReviewsOfRestaurant(this.model, restaurant_id)
     next()
 })
