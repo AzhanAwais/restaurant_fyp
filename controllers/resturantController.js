@@ -7,7 +7,14 @@ const PopulateFields = [
         path: "cuisine_type"
     },
     {
-        path: "created_by"
+        path: "created_by",
+    },
+    {
+        path: "reviews",
+        populate: {
+            path: "user",
+            model: "User"
+        }
     },
 ]
 
@@ -29,7 +36,7 @@ exports.createRestaurantMiddleware = (req, res, next) => {
 }
 
 exports.getAll = baseController.getAll(Restaurant, PopulateFields)
-exports.getOne = baseController.getOne(Restaurant)
+exports.getOne = baseController.getOne(Restaurant, PopulateFields)
 exports.createOne = baseController.createOne(Restaurant)
 exports.updateOne = baseController.updateOne(Restaurant)
 exports.deleteOne = baseController.deleteOne(Restaurant)
@@ -43,6 +50,14 @@ exports.searchRestaurants = async (req, res, next) => {
         if (request?.name) {
             let name = new RegExp(request?.name, 'i')
             aggregationBody.push({$match: {name: name}})
+        }
+
+        if(request?.ambience_type) {
+            aggregationBody.push({$match: {ambience_type: request?.ambience_type}})
+        }
+
+        if(request?.cuisine_type) {
+            aggregationBody.push({$match: {cuisine_type: request?.cuisine_type}})
         }
 
         if (request?.id) {

@@ -13,6 +13,8 @@ const reviewRoute = require("./routes/reviewRoute")
 const blogRoute = require("./routes/blogRoute")
 const commentRoute = require("./routes/commentRoute")
 const mediaRoute = require("./routes/mediaRoute")
+const userImages = require("./routes/userImagesRoute")
+
 
 // use middlewares
 app.use(cors({
@@ -20,6 +22,7 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(express.static('uploads'))
 
 // use routes
 app.use(authRoute)
@@ -31,6 +34,7 @@ app.use(reviewRoute)
 app.use(blogRoute)
 app.use(commentRoute)
 app.use(mediaRoute)
+app.use(userImages)
 
 // error middleware (Note: Always keep it at bottom)
 app.use(errorMiddleware)
