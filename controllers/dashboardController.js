@@ -10,9 +10,9 @@ const getDashboard = async (req, res, next) => {
         const reviews = await Review.find().countDocuments()
         const verifiedUsers = await Review.find({ is_verified: true }).countDocuments()
         const activeUsers = await User.find({ is_active: true }).countDocuments()
-        const disabledeUsers = await User.find({ is_active: false }).countDocuments()
+        const disabledUsers = await User.find({ is_active: false }).countDocuments()
         const pendingUsers = await User.find({ is_verified: false }).countDocuments()
-        const verifiedRestaurants = await Restaurant.find({ is_verified: false }).countDocuments()
+        const pendingRestaurants = await Restaurant.find({ is_verified: false }).countDocuments()
         const blogs = await Blog.find().countDocuments()
 
         res.status(200).json({
@@ -22,9 +22,9 @@ const getDashboard = async (req, res, next) => {
                 reviews,
                 verifiedUsers,
                 activeUsers,
-                disabledeUsers,
+                disabledUsers,
                 pendingUsers,
-                verifiedRestaurants,
+                pendingRestaurants,
                 blogs,
                 deletedBlogs: 0
             }
