@@ -13,6 +13,7 @@ const reviewRoute = require("./routes/reviewRoute")
 const blogRoute = require("./routes/blogRoute")
 const commentRoute = require("./routes/commentRoute")
 const mediaRoute = require("./routes/mediaRoute")
+const dashboardRoute = require("./routes/dashboardRoute")
 
 // use middlewares
 app.use(cors({
@@ -31,6 +32,7 @@ app.use(reviewRoute)
 app.use(blogRoute)
 app.use(commentRoute)
 app.use(mediaRoute)
+app.use(dashboardRoute)
 
 // error middleware (Note: Always keep it at bottom)
 app.use(errorMiddleware)

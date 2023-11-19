@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    is_active: {
+        type: Boolean,
+        default: true,
+    },
     bio: {
         type: String,
         required: false,
