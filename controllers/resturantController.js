@@ -91,14 +91,6 @@ exports.searchRestaurants = async (req, res, next) => {
         })
         aggregationBody.push({
             $lookup: {
-                from: 'Cuisine',
-                localField: 'cuisine_type',
-                foreignField: '_id',
-                as: 'cuisine_type'
-            },
-        })
-        aggregationBody.push({
-            $lookup: {
                 from: 'Ambience',
                 localField: 'ambience_type',
                 foreignField: '_id',

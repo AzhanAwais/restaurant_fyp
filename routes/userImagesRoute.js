@@ -19,11 +19,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage})
 
-
-router.get('/verification', userImagesController.getAll)
+router.post('/verification-user/:id', userImagesController.verifyUser)
+router.get('/verification', userImagesController.verificationAggregation)
 router.get('/verification/:id', userImagesController.getOne)
 router.post('/verification', upload.fields([{name: 'nic_front', maxCount: 1}, {name: "nic_back", maxCount: 1}, {name: "shop_card", maxCount: 1}, {name: "shop_bill", maxCount: 1}]), userImagesController.createOne)
-router.put('/verification/:id', userImagesController.updateOne)
+// router.put('/verification/:id', userImagesController.updateOne)
 router.delete('/verification/:id', userImagesController.deleteOne)
 
 module.exports = router
