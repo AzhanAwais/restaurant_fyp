@@ -75,6 +75,10 @@ const userSchema = new mongoose.Schema({
     platform_type: {
         type: String,
         required: false,
+    },
+    otp: {
+        type: String,
+        required: false
     }
 
 }, { timestamps: true })

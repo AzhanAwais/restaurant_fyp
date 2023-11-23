@@ -1,5 +1,6 @@
 const User = require("../models/User");
-const authService = require("../services/authService")
+const authService = require("../services/authService");
+const emailService = require("../services/emailService");
 const jwtService = require("../services/jwtService")
 const AppError = require("../utils/AppError");
 const bcrypt = require('bcryptjs');
@@ -13,7 +14,7 @@ const Register = async (req, res, next) => {
         })
     }
     catch (e) {
-        return next(new AppError(e.message, 400))
+        return next(new AppError(e.message, 500))
     }
 }
 
@@ -29,13 +30,15 @@ const Login = async (req, res, next) => {
 
         const token = await jwtService.generateToken(user)
         res.status(200).json({
+            message: "User login successfully",
             data: {
-                user, token
+                user,
+                token
             }
         })
     }
     catch (e) {
-        return next(new AppError(e.message, 400))
+        return next(new AppError(e.message, 500))
     }
 }
 
@@ -58,6 +61,7 @@ const SocialSignIn = async (req, res, next) => {
         const token = await jwtService.generateToken(newUser)
 
         res.status(200).json({
+            message: "User login successfully",
             data: {
                 user: newUser,
                 token
@@ -65,12 +69,78 @@ const SocialSignIn = async (req, res, next) => {
         })
     }
     catch (e) {
-        return next(new AppError(e.message, 400))
+        return next(new AppError(e.message, 500))
+    }
+}
+
+const ForgotPassword = async (req, res, next) => {
+    try {
+        const { email } = req.body
+        const user = await authService.findUserByEmail(email)
+        const otp = Math.floor(1000 + Math.random() * 9000).toString()
+        const sendedEmail = emailService.sendEmail(email, user, otp)
+        user.otp = otp
+        await user.save()
+
+        res.status(200).json({
+            message: "Otp has been sent to your email",
+            data: {
+                otp
+            }
+        })
+    }
+    catch (e) {
+        return next(new AppError(e.message, 500))
+    }
+}
+
+const VerifyOtp = async (req, res, next) => {
+    try {
+        const { email, otp } = req.body
+        const user = await authService.findUserByEmail(email)
+        if (user.otp != otp) {
+            return next(new AppError('Invalid otp code', 400))
+        }
+        user.otp = null
+        await user.save()
+
+        res.status(200).json({
+            message: "Otp verified successfully",
+            data: null
+        })
+    }
+    catch (e) {
+        return next(new AppError(e.message, 500))
+    }
+}
+
+const ResetPassword = async (req, res, next) => {
+    try {
+        const { email, password, confirmPassword } = req.body
+
+        if (password != confirmPassword) {
+            return next(new AppError('Password and confirm password did not match', 400))
+        }
+
+        const user = await authService.findUserByEmail(email)
+        user.password = await bcrypt.hash(password, 10)
+        await user.save()
+
+        res.status(200).json({
+            message: "Password reset successfully",
+            data: null
+        })
+    }
+    catch (e) {
+        return next(new AppError(e.message, 500))
     }
 }
 
 module.exports = {
     Register,
     Login,
-    SocialSignIn
+    SocialSignIn,
+    ForgotPassword,
+    VerifyOtp,
+    ResetPassword
 }

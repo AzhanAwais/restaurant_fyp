@@ -1,4 +1,13 @@
 const dotenv = require('dotenv')
 dotenv.config()
 
-module.exports = { PORT, DB_URL, JWT_SECRET_KEY, ATLAS_DB_URL } = process.env
+module.exports = {
+    PORT,
+    DB_URL,
+    JWT_SECRET_KEY,
+    EMAIL_HOST,
+    EMAIL_PORT,
+    EMAIL_USER,
+    EMAIL_PASSWORD,
+    EMAIL_FROM,
+} = process.env
