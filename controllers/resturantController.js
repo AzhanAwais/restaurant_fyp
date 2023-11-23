@@ -1,13 +1,21 @@
 const Restaurant = require("../models/Restaurant")
 const baseController = require("./baseController")
 const AppError = require("../utils/AppError");
+const mongoose = require("mongoose");
 
 const PopulateFields = [
     {
         path: "cuisine_type"
     },
     {
-        path: "created_by"
+        path: "created_by",
+    },
+    {
+        path: "reviews",
+        populate: {
+            path: "user",
+            model: "User"
+        }
     },
 ]
 
@@ -39,8 +47,16 @@ exports.searchRestaurants = async (req, res, next) => {
             aggregationBody.push({$match: {name: name}})
         }
 
+        if(request?.ambience_type) {
+            aggregationBody.push({$match: {ambience_type: new mongoose.Types.ObjectId(request?.ambience_type)}})
+        }
+
+        if(request?.cuisine_type) {
+            aggregationBody.push({$match: {cuisine_type: new mongoose.Types.ObjectId(request?.cuisine_type)}})
+        }
+
         if (request?.id) {
-            aggregationBody.push({$match: {_id: request?.id}})
+            aggregationBody.push({$match: {_id: new mongoose.Types.ObjectId(request?.id)}})
         }
 
         if (request?.address) {
@@ -62,36 +78,31 @@ exports.searchRestaurants = async (req, res, next) => {
 
         aggregationBody.push({
             $lookup: {
-                from: 'Cuisine',
+                from: 'cuisines',
                 localField: 'cuisine_type',
                 foreignField: '_id',
                 as: 'cuisine_type'
             },
         })
+        aggregationBody.push({$unwind: '$cuisine_type'})
         aggregationBody.push({
             $lookup: {
-                from: 'Cuisine',
-                localField: 'cuisine_type',
-                foreignField: '_id',
-                as: 'cuisine_type'
-            },
-        })
-        aggregationBody.push({
-            $lookup: {
-                from: 'Ambience',
+                from: 'ambiences',
                 localField: 'ambience_type',
                 foreignField: '_id',
                 as: 'ambience_type'
             },
         })
+        aggregationBody.push({$unwind: '$ambience_type'})
         aggregationBody.push({
             $lookup: {
-                from: 'User',
+                from: 'users',
                 localField: 'created_by',
                 foreignField: '_id',
                 as: 'created_by'
             },
         })
+        aggregationBody.push({$unwind: '$created_by'})
 
         let data = await Restaurant.aggregate(aggregationBody)
 
