@@ -71,7 +71,11 @@ const userSchema = new mongoose.Schema({
     platform_type: {
         type: String,
         required: false,
-    }
+    },
+    following: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    }]
 
 }, { timestamps: true })
 
