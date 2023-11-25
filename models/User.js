@@ -79,7 +79,11 @@ const userSchema = new mongoose.Schema({
     otp: {
         type: String,
         required: false
-    }
+    },
+    following: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    }]
 
 }, { timestamps: true })
 
