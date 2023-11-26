@@ -90,7 +90,7 @@ exports.updateOne = Model => {
     return (async (req, res, next) => {
         try {
             const { id } = req.params
-            const data = await Model.findByIdAndUpdate(id, req.body)
+            const data = await Model.findByIdAndUpdate(id, req.body, { new: true })
             res.status(200).json({
                 message: "Record updated successfully",
                 success: true,

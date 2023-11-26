@@ -77,6 +77,10 @@ const restaurantSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: [true, "User is required"]
+    },
+    rupees: {
+        type: Number,
+        required: false
     }
 }, { timestamps: true })
 
