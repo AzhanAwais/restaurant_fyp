@@ -9,6 +9,10 @@ const mediaSchema = new mongoose.Schema({
         type: String,
         required: [true, "Url is required"]
     },
+    title:{
+        type: String,
+        required: [true, "Title is required"]
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
