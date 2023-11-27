@@ -11,15 +11,17 @@ const PopulateFields = [
 
 exports.likeBlog = async (req, res, next) => {
     try {
-        let {blog_id, user_id} = req.body
-        let userFind = await User.findById(user_id).populate(PopulateFields)
+        let { blog_id, user_id } = req.body
+        let userFind = await User.findById(user_id).populate()
         if (!userFind) return next(new AppError("No user found", 404))
         let blog = await Blog.findById(blog_id)
         if (!blog) return next(new AppError("No blog found", 404))
-        if(user_id in blog.dislikes) {
+        if (blog.dislikes.includes(user_id)) {
             blog.dislikes.splice(blog.dislikes.indexOf(user_id), 1)
         }
-        blog.likes.push(user_id)
+        if (!blog.likes.includes(user_id)) {
+            blog.likes.push(user_id)
+        }
         await blog.save()
         res.status(200).json({
             message: "User likes the blog",
@@ -34,15 +36,17 @@ exports.likeBlog = async (req, res, next) => {
 
 exports.dislikeBlog = async (req, res, next) => {
     try {
-        let {blog_id, user_id} = req.body
-        let userFind = await User.findById(user_id).populate(PopulateFields)
+        let { blog_id, user_id } = req.body
+        let userFind = await User.findById(user_id).populate()
         if (!userFind) return next(new AppError("No user found", 404))
         let blog = await Blog.findById(blog_id)
         if (!blog) return next(new AppError("No blog found", 404))
-        if(user_id in blog.dislikes) {
+        if (blog.likes.includes(user_id)) {
             blog.likes.splice(blog.likes.indexOf(user_id), 1)
         }
-        blog.dislikes.push(user_id)
+        if (!blog.dislikes.includes(user_id)) {
+            blog.dislikes.push(user_id)
+        }
         await blog.save()
         res.status(200).json({
             message: "User dislikes this blog",
