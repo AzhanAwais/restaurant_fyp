@@ -81,6 +81,14 @@ const restaurantSchema = new mongoose.Schema({
     rupees: {
         type: Number,
         required: false
+    },
+    discount: {
+        type: Number,
+        required: false
+    },
+    discountOn: {
+        type: String,
+        required: false
     }
 }, { timestamps: true })
 
