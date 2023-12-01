@@ -86,10 +86,7 @@ const restaurantSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    discountOn: {
-        type: String,
-        required: false
-    }
+    discountOn: []
 }, { timestamps: true })
 
 restaurantSchema.index({ location: '2dsphere' })
