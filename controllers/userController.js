@@ -9,10 +9,10 @@ exports.deleteOne = baseController.deleteOne(User)
 
 exports.followUser = async (req, res, next) => {
     try {
-        let { follow_user_id } = req.body
+        let { user_id } = req.body
 
-        let updateUser = await User.findByIdAndUpdate(req.user?._id, {
-            $push: { follow: follow_user_id }
+        let updateUser = await User.findByIdAndUpdate({ _id: req.user?._id }, {
+            $push: { following: user_id }
         }, {
             new: true,
         })
@@ -20,7 +20,7 @@ exports.followUser = async (req, res, next) => {
         res.status(200).json({
             message: "User followed successfully",
             success: true,
-            updateUser
+            data: updateUser
         })
     } catch (err) {
         return next(new AppError(e.message, 400))
@@ -29,10 +29,10 @@ exports.followUser = async (req, res, next) => {
 
 exports.unfollowUser = async (req, res, next) => {
     try {
-        let { follow_user_id } = req.body
+        let { user_id } = req.body
 
         let updateUser = await User.findByIdAndUpdate(req.user?._id, {
-            $pull: { follow: follow_user_id }
+            $pull: { following: user_id }
         }, {
             new: true,
         })
@@ -40,7 +40,7 @@ exports.unfollowUser = async (req, res, next) => {
         res.status(200).json({
             message: "User unfollowed successfully",
             success: true,
-            updateUser
+            data: updateUser
         })
     } catch (err) {
         return next(new AppError(e.message, 400))
