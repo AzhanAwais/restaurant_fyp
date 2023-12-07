@@ -7,6 +7,13 @@ const PopulateFields = [
     {
         path: "user"
     },
+    {
+        path: "comments",
+        populate: {
+            path: 'user',
+            model: 'User'
+        }
+    },
 ]
 
 exports.likeBlog = async (req, res, next) => {
