@@ -9,7 +9,7 @@ const authMiddleware = async (req, res, next) => {
         if (!authorizationHeader || !authorizationHeader.startsWith('Bearer')) {
             return next(new AppError("Unauthorized / No token provided", 401))
         }
-        const token = authorizationHeader.split(' ')[2]
+        const token = authorizationHeader.split(' ')[1] || authorizationHeader.split(' ')[2]
         const _id = await jwtService.verifyToken(token)
         const user = await User.findOne({ _id })
         
