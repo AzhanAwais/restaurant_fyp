@@ -2,6 +2,7 @@ const Blog = require("../models/Blog")
 const User = require('../models/User')
 const baseController = require("./baseController")
 const AppError = require("../utils/AppError");
+const Notification = require("../models/Notification");
 
 const PopulateFields = [
     {
@@ -29,7 +30,14 @@ exports.likeBlog = async (req, res, next) => {
         if (!blog.likes.includes(user_id)) {
             blog.likes.push(user_id)
         }
+        const notification = new Notification({
+            notification: `${userFind?.name} Like your post `,
+            send_to: blog.user
+        })
+
         await blog.save()
+        await notification.save()
+        
         res.status(200).json({
             message: "User likes the blog",
             success: true,
@@ -54,7 +62,15 @@ exports.dislikeBlog = async (req, res, next) => {
         if (!blog.dislikes.includes(user_id)) {
             blog.dislikes.push(user_id)
         }
+        
+        const notification = new Notification({
+            notification: `${userFind?.name} Dislike your post `,
+            send_to: blog.user
+        })
+
         await blog.save()
+        await notification.save()
+
         res.status(200).json({
             message: "User dislikes this blog",
             success: true,

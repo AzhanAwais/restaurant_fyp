@@ -1,7 +1,7 @@
 
 const findBlogById = async (id, Blog) => {
     try {
-        const blog = await Blog.findById(id)
+        const blog = await Blog.findById({ _id: id })
         if (!blog) {
             throw new Error("No blog found")
         }

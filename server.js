@@ -15,6 +15,8 @@ const commentRoute = require("./routes/commentRoute")
 const mediaRoute = require("./routes/mediaRoute")
 const dashboardRoute = require("./routes/dashboardRoute")
 const userImages = require("./routes/userImagesRoute")
+const postGigRoute = require("./routes/postGigRoute")
+const notificationRoute = require("./routes/notificationRoute")
 
 // use middlewares
 app.use(cors({
@@ -36,6 +38,8 @@ app.use(commentRoute)
 app.use(mediaRoute)
 app.use(dashboardRoute)
 app.use(userImages)
+app.use(postGigRoute)
+app.use(notificationRoute)
 
 // error middleware (Note: Always keep it at bottom)
 app.use(errorMiddleware)

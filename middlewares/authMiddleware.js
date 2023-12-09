@@ -12,7 +12,7 @@ const authMiddleware = async (req, res, next) => {
         const token = authorizationHeader.split(' ')[1] || authorizationHeader.split(' ')[2]
         const _id = await jwtService.verifyToken(token)
         const user = await User.findOne({ _id })
-        
+
         if (!user) {
             return next(new AppError("Invalid token", 401))
         }
