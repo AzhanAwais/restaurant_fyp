@@ -3,9 +3,6 @@ const baseController = require("./baseController")
 
 const PopulateFields = [
     {
-        path: "user"
-    },
-    {
         path: "send_to"
     },
 ]
