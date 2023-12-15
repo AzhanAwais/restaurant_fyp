@@ -8,6 +8,11 @@ const bcrypt = require('bcryptjs');
 const Register = async (req, res, next) => {
     try {
         const user = await authService.createUser(req.body)
+        const otp = Math.floor(1000 + Math.random() * 9000).toString()
+        const sendedEmail = await emailService.sendEmail(user.email, user, otp)
+        user.otp = otp
+        await user.save()
+
         res.status(200).json({
             message: "User register successfully",
             data: user
@@ -26,6 +31,10 @@ const Login = async (req, res, next) => {
 
         if (!isPasswordValid) {
             return next(new AppError('Invalid login credentials', 400))
+        }
+
+        if(user.otp != null){
+            return next(new AppError('Please verify otp to login', 400))
         }
 
         const token = await jwtService.generateToken(user)
@@ -78,7 +87,7 @@ const ForgotPassword = async (req, res, next) => {
         const { email } = req.body
         const user = await authService.findUserByEmail(email)
         const otp = Math.floor(1000 + Math.random() * 9000).toString()
-        const sendedEmail = emailService.sendEmail(email, user, otp)
+        const sendedEmail = await emailService.sendEmail(email, user, otp)
         user.otp = otp
         await user.save()
 
